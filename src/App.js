@@ -1,5 +1,8 @@
 import React, {Component, Fragment} from "react";
 import {HashRouter as Router, Link, Route, Switch} from "react-router-dom";
+import Movies from "./components/Movies";
+import Admin from "./components/Admin";
+import Home from "./components/Home";
 
 function App() {
   return (
@@ -44,18 +47,6 @@ function App() {
         </div>
       </Router>
   );
-}
-
-function Home() {
-  return <h2>Home</h2>
-}
-
-function Movies() {
-  return <h2>Movies</h2>
-}
-
-function Admin() {
-  return <h2>Admin</h2>
 }
 
 export default App;
