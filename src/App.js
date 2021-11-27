@@ -1,5 +1,5 @@
 import React, {Component, Fragment} from "react";
-import {HashRouter as Router, Link, Route, Switch} from "react-router-dom";
+import {BrowserRouter as Router, Link, Route, Switch, useParams} from "react-router-dom";
 import Movies from "./components/Movies";
 import Admin from "./components/Admin";
 import Home from "./components/Home";
@@ -32,6 +32,9 @@ function App() {
             </div>
             <div className="col-md-10">
               <Switch>
+                <Route path="/movies/:id">
+                  <Movie />
+                </Route>
                 <Route path="/movies">
                   <Movies />
                 </Route>
@@ -47,6 +50,11 @@ function App() {
         </div>
       </Router>
   );
+}
+
+function Movie() {
+  let {id} = useParams();
+  return <h2>Movie id {id}</h2>
 }
 
 export default App;
