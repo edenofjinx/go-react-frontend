@@ -3,7 +3,7 @@ import {BrowserRouter as Router, Link, Route, Switch, useParams, useRouteMatch} 
 import Movies from "./components/Movies";
 import Admin from "./components/Admin";
 import Home from "./components/Home";
-import Categories from "./components/Categories";
+import Genres from "./components/Genres";
 import OneMovie from "./components/OneMovie";
 
 function App() {
@@ -27,7 +27,7 @@ function App() {
                     <Link to="/movies">Movies</Link>
                   </li>
                   <li className="list-group-item">
-                    <Link to="/categories">Categories</Link>
+                    <Link to="/genres">Genres</Link>
                   </li>
                   <li className="list-group-item">
                     <Link to="/admin">Manage Catalog</Link>
@@ -41,15 +41,9 @@ function App() {
                 <Route path="/movies">
                   <Movies />
                 </Route>
-                <Route exact path="/categories">
-                  <CategoryPage />
+                <Route exact path="/genres">
+                  <Genres />
                 </Route>
-                <Route exact path="/categories/drama"
-                       render={(props) => <Categories {...props} title={`Drama`} />} />
-                <Route exact path="/categories/comedy"
-                       render={(props) => <Categories {...props} title={`Comedy`} />} />
-                <Route exact path="/categories/action"
-                       render={(props) => <Categories {...props} title={`Action`} />} />
                 <Route path="/admin">
                   <Admin />
                 </Route>
@@ -61,22 +55,6 @@ function App() {
           </div>
         </div>
       </Router>
-  );
-}
-
-
-function CategoryPage() {
-  let {path, url} = useRouteMatch();
-
-  return (
-      <div>
-        <h2>Categories</h2>
-        <ul>
-          <li><Link to={`${path}/drama`}>Drama</Link></li>
-          <li><Link to={`${path}/comedy`}>Comedy</Link></li>
-          <li><Link to={`${path}/action`}>Action</Link></li>
-        </ul>
-      </div>
   );
 }
 
