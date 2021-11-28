@@ -3,32 +3,41 @@ import {Link} from "react-router-dom";
 
 export default class Movies extends Component {
 
-    state = {movies: []};
+    state = {
+        movies: [],
+        isLoaded: false
+    };
 
     componentDidMount() {
-        this.setState({
-            movies: [
-                {id: 1, title: "Titanic", runtime: 142},
-                {id: 2, title: "The fight club", runtime: 125},
-                {id: 3, title: "The matrix", runtime: 118}
-            ]
-        })
+        fetch("http://localhost:4000/v1/movies")
+            .then((response) => response.json())
+            .then((json) => {
+                this.setState({
+                    movies: json.movies,
+                    isLoaded: true
+                })
+            })
     }
 
     render() {
-        return (
-            <Fragment>
-                <h2>Movie homepage</h2>
-                <ul>
-                    {this.state.movies.map( (m) => (
-                        <li key={m.id}>
-                            <Link to={`/movies/${m.id}`}>
-                                {m.title}
-                            </Link>
-                        </li>
-                    ))}
-                </ul>
-            </Fragment>
-        );
+        const {movies, isLoaded} = this.state;
+        if (!isLoaded) {
+            return <p>Loading...</p>
+        } else {
+            return (
+                <Fragment>
+                    <h2>Movie homepage</h2>
+                    <ul>
+                        {movies.map( (m) => (
+                            <li key={m.id}>
+                                <Link to={`/movies/${m.id}`}>
+                                    {m.title}
+                                </Link>
+                            </li>
+                        ))}
+                    </ul>
+                </Fragment>
+            );
+        }
     }
 }
