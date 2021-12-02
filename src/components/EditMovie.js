@@ -26,7 +26,8 @@ export default class EditMovie extends Component {
                 {id: "NC17", value: "NC17"},
             ],
             isLoaded: false,
-            error: null
+            error: null,
+            errors: [],
         }
         this.handleChange = this.handleChange.bind(this)
         this.handleSubmit = this.handleSubmit.bind(this)
@@ -34,6 +35,15 @@ export default class EditMovie extends Component {
 
     handleSubmit = (event) => {
         event.preventDefault();
+
+        let errors = [];
+        if (this.state.movie.title === "") {
+            errors.push("title");
+        }
+        this.setState({errors: errors})
+        if (errors.length > 0) {
+            return false;
+        }
         const data = new FormData(event.target);
         const payload = Object.fromEntries(data.entries());
         console.log(payload);
@@ -56,6 +66,10 @@ export default class EditMovie extends Component {
                 [name]: value,
             }
         }))
+    }
+
+    hasErrors(key) {
+        return this.state.errors.indexOf(key) !== -1;
     }
 
     componentDidMount() {
@@ -113,8 +127,15 @@ export default class EditMovie extends Component {
                     <hr/>
                     <form onSubmit={this.handleSubmit}>
                         <input type="hidden" name="id" id="id" value={movie.id} onChange={this.handleChange}/>
-                        <Input title={"Title"} type={"text"} name={"title"} value={movie.title}
-                               handleChange={this.handleChange}/>
+                        <Input className={this.hasErrors("title") ? "is-invalid" : ""}
+                               title={"Title"}
+                               type={"text"}
+                               name={"title"}
+                               value={movie.title}
+                               handleChange={this.handleChange}
+                               errorDiv={this.hasErrors("title") ? "text-danger" : "d-none"}
+                               errorMsg={"Please enter a title"}
+                        />
                         <Input title={"Release date"} type={"date"} name={"release_date"} value={movie.release_date}
                                handleChange={this.handleChange}/>
                         <Input title={"Runtime"} type={"text"} name={"runtime"} value={movie.runtime}
