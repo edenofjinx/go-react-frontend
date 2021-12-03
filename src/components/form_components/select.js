@@ -5,7 +5,7 @@ const Select = (props) => {
                 {" "}{props.title}{" "}
             </label>
             <select name={props.name} id={props.name} value={props.value} onChange={props.handleChange}
-                    className="form-select">
+                    className={`form-select ${props.className}`}>
                 <option value="">{props.placeholder}</option>
                 {props.options.map((option) => {
                     return (
@@ -15,6 +15,7 @@ const Select = (props) => {
                     )
                 })}
             </select>
+            <div className={props.errorDiv}>{props.errorMsg}</div>
         </div>
     );
 };

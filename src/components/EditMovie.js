@@ -37,15 +37,17 @@ export default class EditMovie extends Component {
         event.preventDefault();
 
         let errors = [];
-        if (this.state.movie.title === "") {
-            errors.push("title");
+        const data = new FormData(event.target);
+        const payload = Object.fromEntries(data.entries());
+        for (const key in payload) {
+            if (`${payload[key]}` === '') {
+                errors.push(`${key}`);
+            }
         }
         this.setState({errors: errors})
         if (errors.length > 0) {
             return false;
         }
-        const data = new FormData(event.target);
-        const payload = Object.fromEntries(data.entries());
         console.log(payload);
 
         const requestOptions = {
@@ -136,22 +138,45 @@ export default class EditMovie extends Component {
                                errorDiv={this.hasErrors("title") ? "text-danger" : "d-none"}
                                errorMsg={"Please enter a title"}
                         />
-                        <Input title={"Release date"} type={"date"} name={"release_date"} value={movie.release_date}
-                               handleChange={this.handleChange}/>
-                        <Input title={"Runtime"} type={"text"} name={"runtime"} value={movie.runtime}
-                               handleChange={this.handleChange}/>
-                        <Select
-                            title={"MPAA Rating"}
-                            name={"mpaa_rating"}
-                            options={this.state.mpaaOptions}
-                            value={movie.mpaa_rating}
-                            handleChange={this.handleChange}
-                            placeholder={"Choose..."}
+                        <Input className={this.hasErrors("release_date") ? "is-invalid" : ""}
+                               title={"Release date"}
+                               type={"date"}
+                               name={"release_date"}
+                               value={movie.release_date}
+                               handleChange={this.handleChange}
+                               errorDiv={this.hasErrors("release_date") ? "text-danger" : "d-none"}
+                               errorMsg={"Please enter a date"}
                         />
-                        <Input title={"Rating"} type={"text"} name={"rating"} value={movie.rating}
-                               handleChange={this.handleChange}/>
-                        <Textarea title={"Description"} name={"description"} value={movie.description}
-                                  handleChange={this.handleChange}/>
+                        <Input className={this.hasErrors("runtime") ? "is-invalid" : ""}
+                               title={"Runtime"}
+                               type={"text"}
+                               name={"runtime"}
+                               value={movie.runtime}
+                               handleChange={this.handleChange}
+                               errorDiv={this.hasErrors("runtime") ? "text-danger" : "d-none"}
+                               errorMsg={"Please enter a runtime"}
+                        />
+                        <Select className={this.hasErrors("mpaa_rating") ? "is-invalid" : ""}
+                                title={"MPAA Rating"}
+                                name={"mpaa_rating"}
+                                options={this.state.mpaaOptions}
+                                value={movie.mpaa_rating}
+                                handleChange={this.handleChange}
+                                placeholder={"Choose..."}
+                                errorDiv={this.hasErrors("mpaa_rating") ? "text-danger" : "d-none"}
+                                errorMsg={"Please select a mpaa rating"}
+                        />
+                        <Input className={this.hasErrors("rating") ? "is-invalid" : ""}
+                               title={"Rating"} type={"text"} name={"rating"} value={movie.rating}
+                               handleChange={this.handleChange}
+                               errorDiv={this.hasErrors("rating") ? "text-danger" : "d-none"}
+                               errorMsg={"Please enter a rating"}
+                        />
+                        <Textarea className={this.hasErrors("description") ? "is-invalid" : ""}
+                                  title={"Description"} name={"description"} value={movie.description}
+                                  handleChange={this.handleChange}
+                                  errorDiv={this.hasErrors("description") ? "text-danger" : "d-none"}
+                                  errorMsg={"Please enter a description"}/>
                         <hr/>
                         <button className="btn btn-primary">Save</button>
                     </form>
