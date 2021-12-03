@@ -69,9 +69,7 @@ export default class EditMovie extends Component {
                         alert: {type: "alert-danger", message: data.error.message}
                     })
                 } else {
-                    this.setState({
-                        alert: {type: "alert-success", message: "Changes saved!"}
-                    })
+                    this.props.history.push({pathname: "/admin"},)
                 }
             })
             .catch(err => {
@@ -110,7 +108,10 @@ export default class EditMovie extends Component {
                 })
                 .then((json) => {
                     const releaseDate = new Date(json.movie.release_date);
-                    let formattedDate = releaseDate.getFullYear() + '-' + (releaseDate.getMonth()+1) +'-'+ releaseDate.getDate()
+                    let year = releaseDate.getFullYear();
+                    let day = releaseDate.getDate();
+                    let month = ('0' + (releaseDate.getMonth()+1)).slice(-2);
+                    let formattedDate = year + '-' + month + '-' + day
                     this.setState(
                         {
                             movie: {
