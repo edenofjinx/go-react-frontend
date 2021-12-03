@@ -1,4 +1,5 @@
 import React, {Component, Fragment} from "react";
+import {Link} from "react-router-dom";
 import Input from "./form_components/input";
 import Textarea from "./form_components/textarea";
 import Select from "./form_components/select";
@@ -53,7 +54,6 @@ export default class EditMovie extends Component {
         if (errors.length > 0) {
             return false;
         }
-        console.log(payload);
 
         const requestOptions = {
             method: 'POST',
@@ -109,7 +109,6 @@ export default class EditMovie extends Component {
                 .then((json) => {
                     const releaseDate = new Date(json.movie.release_date);
                     let formattedDate = releaseDate.getFullYear() + '-' + (releaseDate.getMonth()+1) +'-'+ releaseDate.getDate()
-                    console.log(formattedDate)
                     this.setState(
                         {
                             movie: {
@@ -136,6 +135,10 @@ export default class EditMovie extends Component {
                 isLoaded: true
             })
         }
+    }
+
+    confirmDelete = (e) => {
+        console.log("would delete movie id", this.state.movie.id);
     }
 
     render() {
@@ -202,6 +205,10 @@ export default class EditMovie extends Component {
                                   errorMsg={"Please enter a description"}/>
                         <hr/>
                         <button className="btn btn-primary">Save</button>
+                        <Link to="/admin" className="btn btn-warning ms-1">Cancel</Link>
+                        {movie.id > 0 && (
+                            <a href="#!" onClick={() => this.confirmDelete()} className="btn btn-danger ms-1">Delete</a>
+                        )}
                     </form>
                 </Fragment>
             )
