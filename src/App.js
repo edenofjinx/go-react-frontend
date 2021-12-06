@@ -94,9 +94,9 @@ export default class App extends Component {
                   <Route path="/admin/movie/:id" component={(props) => (
                       <EditMovie {...props} jwt={this.state.jwt}/>
                   )}/>
-                  <Route path="/admin">
-                    <Admin/>
-                  </Route>
+                  <Route path="/admin" component={(props) => (
+                      <Admin {...props} jwt={this.state.jwt}/>
+                  )} />
                   <Route path="/">
                     <Home/>
                   </Route>
