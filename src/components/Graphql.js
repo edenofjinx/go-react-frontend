@@ -1,4 +1,5 @@
 import React, {Component, Fragment} from "react";
+import Input from "./form_components/input";
 
 export default class Graphql extends Component {
     constructor(props) {
@@ -10,8 +11,56 @@ export default class Graphql extends Component {
             alert: {
                 type: "d-none",
                 message: ""
-            }
+            },
+            searchTerm: ""
         }
+        this.handleChange = this.handleChange.bind(this);
+    }
+
+    handleChange = (event) => {
+        let value = event.target.value;
+        this.setState((prevState) => ({
+                searchTerm: value
+            })
+        )
+        this.performSearch()
+    }
+
+    performSearch() {
+        const payload = `
+        {
+            search(titleContains: "${this.state.searchTerm}") {
+                id
+                title
+                runtime
+                year
+                description
+            }
+        }`;
+        const myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json")
+        const requestOptions = {
+            method: "POST",
+            body: payload,
+            headers: myHeaders
+        }
+        fetch("http://localhost:4000/v1/graphql", requestOptions)
+            .then((response) => response.json())
+            .then((data) => {
+                let theList = Object.values(data.data.search)
+                return theList
+            })
+            .then((theList) => {
+                if (theList.length > 0) {
+                    this.setState({
+                        movies: theList,
+                    })
+                } else {
+                    this.setState({
+                        movies: [],
+                    })
+                }
+            })
     }
 
     componentDidMount() {
@@ -32,7 +81,7 @@ export default class Graphql extends Component {
             body: payload,
             headers: myHeaders
         }
-        fetch("http://localhost:4000/v1/graphql/list", requestOptions)
+        fetch("http://localhost:4000/v1/graphql", requestOptions)
             .then((response) => response.json())
             .then((data) => {
                 let theList = Object.values(data.data.list)
@@ -51,6 +100,13 @@ export default class Graphql extends Component {
             <Fragment>
                 <h2>Graphql</h2>
                 <hr/>
+                <Input
+                    title={"Search"}
+                    type={"text"}
+                    name={"search"}
+                    value={this.state.searchTerm}
+                    handleChange={this.handleChange}
+                    />
                 <div className="list-group">
                     {movies.map((m) => (
                         <a
