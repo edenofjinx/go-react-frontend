@@ -1,5 +1,6 @@
 import React, {Component, Fragment} from "react";
 import Input from "./form_components/input";
+import {Link} from "react-router-dom";
 
 export default class Graphql extends Component {
     constructor(props) {
@@ -47,8 +48,7 @@ export default class Graphql extends Component {
         fetch("http://localhost:4000/v1/graphql", requestOptions)
             .then((response) => response.json())
             .then((data) => {
-                let theList = Object.values(data.data.search)
-                return theList
+                return Object.values(data.data.search)
             })
             .then((theList) => {
                 if (theList.length > 0) {
@@ -109,17 +109,17 @@ export default class Graphql extends Component {
                     />
                 <div className="list-group">
                     {movies.map((m) => (
-                        <a
+                        <Link
                             key={m.id}
                             className="list-group-item list-group-item-action"
-                            href="#!">
+                            to={`/moviesgraphql/${m.id}`}>
                             <strong>{m.title}</strong><br/>
                             <small className="text-muted">
                                 ({m.year}) - {m.runtime} minutes
                             </small>
                             <br/>
                             {m.description.slice(0, 50)}...
-                        </a>
+                        </Link>
                     ))}
                 </div>
             </Fragment>
