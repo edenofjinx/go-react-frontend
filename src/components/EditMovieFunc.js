@@ -86,17 +86,13 @@ function EditMovieFunc(props) {
             .then(response => response.json())
             .then(data => {
                 if (data.error) {
-                    setAlert({
-                        alert: {type: "alert-danger", message: data.error.message},
-                    })
+                    setAlert({type: "alert-danger", message: data.error.message},)
                 } else {
                     props.history.push({pathname: "/admin"},)
                 }
             })
             .catch(err => {
-                setAlert({
-                    alert: {type: "alert-danger", message: "Error occurred. Please try again later."},
-                })
+                setAlert({type: "alert-danger", message: "Error occurred. Please try again later."},)
             })
     };
 
@@ -115,13 +111,9 @@ function EditMovieFunc(props) {
                             .then(response => response.json())
                             .then(data => {
                                 if (data.error) {
-                                    setAlert({
-                                        alert: {type: "alert-danger", message: data.error.message},
-                                    })
+                                    setAlert({type: "alert-danger", message: data.error.message},)
                                 } else {
-                                    setAlert({
-                                        alert: {type: "alert-success", message: "Movie deleted."},
-                                    })
+                                    setAlert({type: "alert-success", message: "Movie deleted."},)
                                     props.history.push({pathname: "/admin"},)
                                 }
                             })
