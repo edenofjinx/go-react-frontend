@@ -1,12 +1,6 @@
 import React, {Component, Fragment} from "react";
 import {BrowserRouter as Router, Link, Route, Switch} from "react-router-dom";
-// import Movies from "./components/Movies";
-import Admin from "./components/Admin";
 import Home from "./components/Home";
-// import Genres from "./components/Genres";
-// import OneMovie from "./components/OneMovie";
-// import OneGenre from "./components/OneGenre";
-// import EditMovie from "./components/EditMovie";
 import Login from "./components/Login";
 import Graphql from "./components/Graphql";
 import OneMovieGraphQL from "./components/OneMovieGraphQL";
@@ -15,6 +9,7 @@ import GenresFunc from "./components/GenresFunc";
 import OneMovieFunc from "./components/OneMovieFunc";
 import OneGenreFunc from "./components/OneGenreFunc";
 import EditMovieFunc from "./components/EditMovieFunc";
+import AdminFunc from "./components/AdminFunc";
 
 export default class App extends Component {
   constructor(props) {
@@ -124,7 +119,7 @@ export default class App extends Component {
                       <EditMovieFunc {...props} jwt={this.state.jwt}/>
                   )}/>
                   <Route path="/admin" component={(props) => (
-                      <Admin {...props} jwt={this.state.jwt}/>
+                      <AdminFunc {...props} jwt={this.state.jwt}/>
                   )} />
                   <Route path="/">
                     <Home/>
