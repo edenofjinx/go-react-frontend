@@ -1,6 +1,6 @@
 import React, {Component, Fragment} from "react";
 import {BrowserRouter as Router, Link, Route, Switch} from "react-router-dom";
-import Movies from "./components/Movies";
+// import Movies from "./components/Movies";
 import Admin from "./components/Admin";
 import Home from "./components/Home";
 import Genres from "./components/Genres";
@@ -10,6 +10,7 @@ import EditMovie from "./components/EditMovie";
 import Login from "./components/Login";
 import Graphql from "./components/Graphql";
 import OneMovieGraphQL from "./components/OneMovieGraphQL";
+import MoviesFunc from "./components/MoviesFunc";
 
 export default class App extends Component {
   constructor(props) {
@@ -103,7 +104,7 @@ export default class App extends Component {
                   }
                   />
                   <Route path="/movies">
-                    <Movies/>
+                    <MoviesFunc/>
                   </Route>
                   <Route path="/genre/:id" component={OneGenre}/>
                   <Route exact path="/genres">
