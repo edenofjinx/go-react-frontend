@@ -6,7 +6,7 @@ import Home from "./components/Home";
 // import Genres from "./components/Genres";
 // import OneMovie from "./components/OneMovie";
 // import OneGenre from "./components/OneGenre";
-import EditMovie from "./components/EditMovie";
+// import EditMovie from "./components/EditMovie";
 import Login from "./components/Login";
 import Graphql from "./components/Graphql";
 import OneMovieGraphQL from "./components/OneMovieGraphQL";
@@ -14,6 +14,7 @@ import MoviesFunc from "./components/MoviesFunc";
 import GenresFunc from "./components/GenresFunc";
 import OneMovieFunc from "./components/OneMovieFunc";
 import OneGenreFunc from "./components/OneGenreFunc";
+import EditMovieFunc from "./components/EditMovieFunc";
 
 export default class App extends Component {
   constructor(props) {
@@ -120,7 +121,7 @@ export default class App extends Component {
                     (props) => <Login {...props} handleJWTChange={this.handleJWTChange} />
                   } />
                   <Route path="/admin/movie/:id" component={(props) => (
-                      <EditMovie {...props} jwt={this.state.jwt}/>
+                      <EditMovieFunc {...props} jwt={this.state.jwt}/>
                   )}/>
                   <Route path="/admin" component={(props) => (
                       <Admin {...props} jwt={this.state.jwt}/>
